@@ -80,7 +80,7 @@ public class PhoneBookTest {
     }
 
     @Test
-    void testFindByNonExistingNumber_shouldNotReturn() {
+    void testFindByNonExistingNumber_shouldReturnNull() {
         //given:
         String name = "Paul";
         String phoneNumber = "192-93-92";
@@ -93,8 +93,43 @@ public class PhoneBookTest {
         Assertions.assertEquals(expected, actual);
     }
 
+    @ParameterizedTest
+    @MethodSource("sourceForFindByName")
+    void testFindByNameExistingName_shouldReturn(String nameForSearch, String expected) {
+        //given:
+        String name = "George";
+        String phoneNumber = "141-99-23";
+        phoneBook.add(name, phoneNumber);
+        String name2 = "Maria";
+        String phoneNumber2 = "180-11-00";
+        phoneBook.add(name2, phoneNumber2);
+        //when:
+        String actual = phoneBook.findByName(nameForSearch);
+        //then:
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void testFindByNonExistingName_shouldReturnNull() {
+        //given:
+        String name = "Nick";
+        String phoneNumber = "732-92-08";
+        phoneBook.add(name, phoneNumber);
+        String nonExistingName = "Alice";
+        String expected = null;
+        //when:
+        String actual = phoneBook.findByName(nonExistingName);
+        //then:
+        Assertions.assertEquals(expected, actual);
+    }
+
     private static Stream<Arguments> sourceForFindByNumber() {
         return Stream.of(Arguments.of("192-93-92", "Tom"),
                 Arguments.of("180-33-28", "Fred"));
+    }
+
+    private static Stream<Arguments> sourceForFindByName() {
+        return Stream.of(Arguments.of("George", "141-99-23"),
+                Arguments.of("Maria", "180-11-00"));
     }
 }
