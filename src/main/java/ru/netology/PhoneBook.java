@@ -5,6 +5,8 @@ import com.google.common.collect.HashBiMap;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class PhoneBook {
 
@@ -34,6 +36,10 @@ public class PhoneBook {
     }
 
     public void printAllNames() {
-        System.out.println("");
+        if (phoneBook.size() < 1) {
+            System.out.println("Phonebook is empty");
+        }
+        Set<String> ascendingNames = new TreeSet<>(phoneBook.keySet());
+        ascendingNames.forEach(System.out::println);
     }
 }

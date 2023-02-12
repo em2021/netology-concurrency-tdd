@@ -128,15 +128,15 @@ public class PhoneBookTest {
     @Test
     void testPrintAllNames_shouldPrint() {
         //given:
-        String name = "Alex";
-        String phoneNumber = "308-19-94";
+        String name = "Zoe";
+        String phoneNumber = "140-09-01";
         phoneBook.add(name, phoneNumber);
-        String name2 = "Peter";
-        String phoneNumber2 = "930-21-10";
+        String name2 = "Alex";
+        String phoneNumber2 = "308-19-94";
         phoneBook.add(name2, phoneNumber2);
-        String name3 = "Zoe";
-        String phoneNumber3 = "140-09-01";
-        phoneBook.add(name2, phoneNumber2);
+        String name3 = "Peter";
+        String phoneNumber3 = "930-21-10";
+        phoneBook.add(name3, phoneNumber3);
         String expected = "Alex\nPeter\nZoe";
         final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStreamCaptor));
