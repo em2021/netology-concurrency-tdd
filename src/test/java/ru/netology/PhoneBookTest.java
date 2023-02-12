@@ -36,7 +36,7 @@ public class PhoneBookTest  {
         String phoneNumber2 = "204-84-90";
         int expected = 2;
         //when:
-        phoneBook.add(name2, phoneNumber2);
+        phoneBook.add(name, phoneNumber);
         int actual = phoneBook.add(name2, phoneNumber2);
         //then:
         Assertions.assertEquals(expected, actual);
