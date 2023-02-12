@@ -5,11 +5,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.*;
 import java.util.stream.Stream;
 
 public class PhoneBookTest {
 
     private PhoneBook phoneBook;
+    private final PrintStream standardOut = System.out;
 
     @BeforeAll
     static void setup() {
@@ -121,6 +123,41 @@ public class PhoneBookTest {
         String actual = phoneBook.findByName(nonExistingName);
         //then:
         Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void testPrintAllNames_shouldPrint() {
+        //given:
+        String name = "Alex";
+        String phoneNumber = "308-19-94";
+        phoneBook.add(name, phoneNumber);
+        String name2 = "Peter";
+        String phoneNumber2 = "930-21-10";
+        phoneBook.add(name2, phoneNumber2);
+        String name3 = "Zoe";
+        String phoneNumber3 = "140-09-01";
+        phoneBook.add(name2, phoneNumber2);
+        String expected = "Alex\nPeter\nZoe";
+        final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStreamCaptor));
+        //when:
+        phoneBook.printAllNames();
+        System.setOut(standardOut);
+        //then:
+        Assertions.assertEquals(expected, outputStreamCaptor.toString().trim());
+    }
+
+    @Test
+    void testPrintAllNamesEmptyPhoneBook_shouldPrintMessage() {
+        //given:
+        String expected = "Phonebook is empty";
+        final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStreamCaptor));
+        //when:
+        phoneBook.printAllNames();
+        System.setOut(standardOut);
+        //then:
+        Assertions.assertEquals(expected, outputStreamCaptor.toString().trim());
     }
 
     private static Stream<Arguments> sourceForFindByNumber() {
